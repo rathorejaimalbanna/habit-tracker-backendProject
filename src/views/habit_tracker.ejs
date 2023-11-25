@@ -1,0 +1,114 @@
+<!-- headers and  navbar -->
+
+<h2 style="text-align: center;color: rgb(191, 84, 84);margin-top: 30px;">Good habits for better lifestyle</h2>
+
+<table class="table table-hover" style="width: 80vw;margin-left: 10vw;margin-top: 50px;">
+  <% if(require_habit){%>
+    <div class="alert alert-danger" style="margin-top: 40px;max-width: 75vw;margin-left: 12.5vw;margin-bottom:-30px;" role="alert">
+      <%=require_habit%>
+    </div>
+  <%}%>
+
+<!-- Modal to update habit -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update habit</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/update_habit" method="post">
+      <div class="modal-body">
+        <input type="text" name="updatedHabit">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- take input to add habit -->
+  <div class="container">
+    <div class="todobody">
+      <form action="add_habit" method="post">
+        <div class="inputdiv"><input id="todoinput" type="text" placeholder="Start New Habit" name="habit">
+          <button id="inputbutton" type="submit">ADD Habit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- habit table dynamic content -->
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Habit</th>
+      <th scope="col">Mon</th>
+      <th scope="col">Tue</th>
+      <th scope="col">Wed</th>
+      <th scope="col">Thr</th>
+      <th scope="col">Fri</th>
+      <th scope="col">Sat</th>
+      <th scope="col">Sun</th>
+      <th scope="col" style="text-align: justify;">Actions</th>
+      <th scope="col">Weekly-Progress</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tbody>
+    <%for(i of habit_list) {%>
+      <tr>
+        <th scope="row"><span style="display:none;"><%=i.id%></span><img style="height: 25px;width: 25px" src="images/arrow.png" alt=""></th>
+        <td>
+          <%=i.habit%>
+        </td>
+        <td>
+          <button type="button" value="pending" onclick="progress(this.id)" class="btn" style="background-color: red;max-height: 35px;" id="progress_button_mon_<%=i.id%>">Pending..</button>
+        </td>
+        <td>
+          <button type="button" value="pending" onclick="progress(this.id)" class="btn" style="background-color: red;max-height: 35px;" id="progress_button_tue_<%=i.id%>">Pending..</button>
+        </td>
+        <td>
+      <button type="button" value="pending" onclick="progress(this.id)" class="btn" style="background-color: red;max-height: 35px;" id="progress_button_wed_<%=i.id%>">Pending..</button>
+        </td>
+        <td>
+          <button type="button" value="pending" onclick="progress(this.id)" class="btn" style="background-color: red;max-height: 35px;" id="progress_button_thr_<%=i.id%>">Pending..</button>
+        </td>
+        <td>
+          <button type="button" value="pending" onclick="progress(this.id)" class="btn" style="background-color: red;max-height: 35px;" id="progress_button_fri_<%=i.id%>">Pending..</button>
+        </td>
+        <td>
+          <button type="button" value="pending" onclick="progress(this.id)" class="btn" style="background-color: red;max-height: 35px;" id="progress_button_sat_<%=i.id%>">Pending..</button>
+        </td>
+        <td>
+          <button type="button" value="pending" onclick="progress(this.id)" class="btn" style="background-color: red;max-height: 35px;" id="progress_button_sun_<%=i.id%>">Pending..</button>
+        </td>
+
+    <!-- delete and update  -->
+        <td>            <a
+           data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <img src="images/edit.png" style="height: 25px;width: 25px;" alt="">
+        </a>
+          <a
+             onclick="delete_habit('<%=i.id%>')">
+            <img src="images/delete.png" style="height: 25px;width: 25px; margin-left:15px;" alt="">
+          </a>
+
+ <!-- progress bar -->
+</td>
+<td>
+  <div class="progress" role="progressbar" style="background-color: lightgrey;" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar progress-bar-striped" style="width: 0%" id="progress_<%=i.id%>"></div>
+  </div>
+</td>
+      </tr>
+      <%}%>
+
+  </tbody>
+  </tbody>
+
+</table>
